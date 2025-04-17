@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -39,7 +38,7 @@ const projects: Project[] = [
     title: "TakeUrTerrain",
     description: "A sports field reservation platform for football, basketball, and tennis courts. Includes booking by time slot and user account management.",
     technologies: ["Laravel", "MySQL", "Tailwind CSS", "JavaScript"],
-    image: "https://images.unsplash.com/photo-1579952363873-ef4e80dbaf11?q=80&w=1170&auto=format&fit=crop", // New valid stadium/sports field image
+    image: "https://images.unsplash.com/photo-1612459284696-5590d1d6e4b3?q=80&w=1170&auto=format&fit=crop",
     githubUrl: "https://github.com/YahyaAf/TakeUrTerrain",
     featured: true
   },
