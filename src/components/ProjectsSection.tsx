@@ -39,7 +39,7 @@ const projects: Project[] = [
     title: "TakeUrTerrain",
     description: "A sports field reservation platform for football, basketball, and tennis courts. Includes booking by time slot and user account management.",
     technologies: ["Laravel", "MySQL", "Tailwind CSS", "JavaScript"],
-    image: "https://images.unsplash.com/photo-1594220691612-e76252475eac", // Modern stadium with multiple courts
+    image: "https://images.unsplash.com/photo-1579952363873-ef4e80dbaf11?q=80&w=1170&auto=format&fit=crop", // New valid stadium/sports field image
     githubUrl: "https://github.com/YahyaAf/TakeUrTerrain",
     featured: true
   },
