@@ -1,5 +1,5 @@
 
-import { Progress } from "@/components/ui/progress";
+import { Card } from "@/components/ui/card";
 
 interface Skill {
   name: string;
@@ -39,20 +39,19 @@ interface SkillCategoryProps {
 }
 
 const SkillCategory = ({ title, skills }: SkillCategoryProps) => (
-  <div>
-    <h3 className="text-xl font-semibold mb-6">{title}</h3>
-    <div className="space-y-4">
+  <Card className="p-6 border border-primary/10 bg-background/50 backdrop-blur-sm">
+    <h3 className="text-xl font-semibold mb-6 text-center">{title}</h3>
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
       {skills.map((skill) => (
-        <div key={skill.name} className="space-y-2">
-          <div className="flex justify-between">
-            <span className="font-medium">{skill.name}</span>
-            <span className="text-muted-foreground">{skill.level}%</span>
-          </div>
-          <Progress value={skill.level} className="h-2" />
+        <div
+          key={skill.name}
+          className="flex items-center justify-center p-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors"
+        >
+          <span className="font-medium text-sm">{skill.name}</span>
         </div>
       ))}
     </div>
-  </div>
+  </Card>
 );
 
 const SkillsSection = () => {
@@ -66,7 +65,7 @@ const SkillsSection = () => {
       <div className="section-container">
         <h2 className="section-title">My Skills</h2>
         
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid md:grid-cols-2 gap-8">
           <SkillCategory title="Frontend Development" skills={frontendSkills} />
           <SkillCategory title="Backend Development" skills={backendSkills} />
           <SkillCategory title="Database Management" skills={databaseSkills} />
@@ -74,17 +73,19 @@ const SkillsSection = () => {
         </div>
         
         <div className="mt-16">
-          <h3 className="text-xl font-semibold mb-6 text-center">Additional Skills</h3>
-          <div className="flex flex-wrap justify-center gap-4">
-            {["Team Work", "Problem-Solving", "Adaptability", "Time Management", "Creativity", "Critical Thinking", "Communication", "Attention to Detail"].map((skill) => (
-              <span 
-                key={skill}
-                className="px-4 py-2 rounded-full bg-secondary dark:bg-gray-700 text-sm font-medium"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
+          <Card className="p-6 border border-primary/10 bg-background/50 backdrop-blur-sm">
+            <h3 className="text-xl font-semibold mb-6 text-center">Additional Skills</h3>
+            <div className="flex flex-wrap justify-center gap-3">
+              {["Team Work", "Problem-Solving", "Adaptability", "Time Management", "Creativity", "Critical Thinking", "Communication", "Attention to Detail"].map((skill) => (
+                <span 
+                  key={skill}
+                  className="px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors text-sm font-medium"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </Card>
         </div>
       </div>
     </section>

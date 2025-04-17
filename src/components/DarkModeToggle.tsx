@@ -29,17 +29,20 @@ const DarkModeToggle = () => {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button 
-            variant="ghost" 
+            variant="outline" 
             size="icon" 
             onClick={toggleDarkMode}
-            className="rounded-full"
+            className="rounded-full bg-background/80 backdrop-blur-sm border border-primary/10 hover:bg-primary/10"
           >
-            {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {isDarkMode ? 
+              <Sun className="h-5 w-5 text-yellow-400" /> : 
+              <Moon className="h-5 w-5 text-primary" />
+            }
             <span className="sr-only">Toggle dark mode</span>
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>{isDarkMode ? "Light mode" : "Dark mode"}</p>
+          <p>{isDarkMode ? "Switch to light mode" : "Switch to dark mode"}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
