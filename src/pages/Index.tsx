@@ -23,7 +23,13 @@ const Index = () => {
           e.preventDefault();
           const element = document.querySelector(id);
           if (element) {
-            element.scrollIntoView({
+            // Add offset for fixed header
+            const offset = 80; 
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            
+            window.scrollTo({
+              top: offsetPosition,
               behavior: 'smooth'
             });
           }
@@ -33,13 +39,37 @@ const Index = () => {
     
     document.addEventListener('click', handleAnchorClick);
     
+    // Add scroll animation observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1,
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all sections
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+    
     return () => {
       document.removeEventListener('click', handleAnchorClick);
+      document.querySelectorAll('section').forEach(section => {
+        observer.unobserve(section);
+      });
     };
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background to-background/95">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background/95 to-background">
       <Navbar />
       <main className="flex-grow">
         <HeroSection />
