@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Calendar, Clock, Users } from "lucide-react";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Badge } from "@/components/ui/badge";
 
 interface Project {
   id: number;
@@ -12,6 +14,7 @@ interface Project {
   image: string;
   githubUrl: string;
   liveUrl?: string;
+  featured?: boolean;
 }
 
 const projects: Project[] = [
@@ -37,7 +40,8 @@ const projects: Project[] = [
     description: "A sports field reservation platform for football, basketball, and tennis courts. Includes booking by time slot and user account management.",
     technologies: ["Laravel", "MySQL", "Tailwind CSS", "JavaScript"],
     image: "https://images.unsplash.com/photo-1594220691612-e76252475eac", // Modern stadium with multiple courts
-    githubUrl: "https://github.com/YahyaAf/TakeUrTerrain"
+    githubUrl: "https://github.com/YahyaAf/TakeUrTerrain",
+    featured: true
   },
   {
     id: 4,
@@ -95,14 +99,26 @@ const ProjectsSection = () => {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.slice(0, visibleProjects).map((project) => (
-            <Card key={project.id} className="overflow-hidden card-hover border border-border h-full flex flex-col">
-              <div className="h-48 overflow-hidden">
+            <Card 
+              key={project.id} 
+              className={`overflow-hidden card-hover border border-border h-full flex flex-col transition-all duration-300 ${
+                project.featured ? "sm:col-span-2 lg:col-span-1 ring-2 ring-primary/20" : ""
+              }`}
+            >
+              <AspectRatio ratio={16/9} className="bg-muted">
                 <img 
                   src={project.image} 
                   alt={project.title} 
-                  className="w-full h-full object-cover transition-transform hover:scale-105"
+                  className="w-full h-full object-cover transition-transform hover:scale-105 duration-500 ease-in-out"
                 />
-              </div>
+                {project.featured && (
+                  <div className="absolute top-2 right-2">
+                    <Badge variant="default" className="bg-primary/80 backdrop-blur-sm">
+                      Featured
+                    </Badge>
+                  </div>
+                )}
+              </AspectRatio>
               
               <CardHeader className="flex-none">
                 <CardTitle>{project.title}</CardTitle>
@@ -120,13 +136,30 @@ const ProjectsSection = () => {
                     </span>
                   ))}
                 </div>
+                
+                {project.id === 3 && (
+                  <div className="mt-4 grid grid-cols-3 gap-2">
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4 text-primary" />
+                      <span>Booking</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <Clock className="h-4 w-4 text-primary" />
+                      <span>Time Slots</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <Users className="h-4 w-4 text-primary" />
+                      <span>User Mgmt</span>
+                    </div>
+                  </div>
+                )}
               </CardContent>
               
               <CardFooter className="flex gap-2 flex-none">
                 {project.githubUrl && (
-                  <Button variant="outline" size="sm" asChild className="flex-1">
+                  <Button variant="outline" size="sm" asChild className="flex-1 group">
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                      <Github className="h-4 w-4" />
+                      <Github className="h-4 w-4 group-hover:text-primary transition-colors" />
                       <span>Code</span>
                     </a>
                   </Button>
