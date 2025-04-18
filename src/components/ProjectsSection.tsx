@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -116,8 +117,25 @@ const ProjectsSection = () => {
 
   return (
     <section id="projects" className="py-24 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl"></div>
+      {/* Enhanced background elements */}
+      <motion.div 
+        className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl"
+        animate={{ 
+          scale: [1, 1.1, 1],
+          x: [0, -20, 0],
+          opacity: [0.5, 0.7, 0.5]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl"
+        animate={{ 
+          scale: [1, 1.2, 1],
+          x: [0, 30, 0],
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
       
       <div className="section-container relative z-10">
         <motion.h2 
@@ -127,7 +145,16 @@ const ProjectsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          My Projects
+          <span className="inline-block">
+            My Projects
+            <motion.span 
+              className="block h-1 w-0 bg-primary/50 mx-auto mt-2"
+              initial={{ width: 0 }}
+              whileInView={{ width: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            />
+          </span>
         </motion.h2>
         
         <motion.div 
@@ -135,7 +162,7 @@ const ProjectsSection = () => {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
         >
           {projects.slice(0, visibleProjects).map((project) => (
             <motion.div
@@ -144,24 +171,38 @@ const ProjectsSection = () => {
               className="h-full"
             >
               <Card 
-                className={`overflow-hidden h-full flex flex-col group hover:border-primary/50 transition-all duration-300 ${
+                className={`overflow-hidden h-full flex flex-col group project-card-hover ${
                   project.featured ? "sm:col-span-2 lg:col-span-1 ring-2 ring-primary/20" : ""
                 }`}
               >
                 <div className="relative overflow-hidden">
                   <AspectRatio ratio={16/9} className="bg-muted">
-                    <img 
+                    <motion.img 
                       src={project.image} 
                       alt={project.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
                     />
                     {project.featured && (
-                      <div className="absolute top-2 right-2">
-                        <Badge variant="default" className="bg-primary/80 backdrop-blur-sm">
+                      <motion.div 
+                        className="absolute top-2 right-2"
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <Badge variant="default" className="bg-primary/80 backdrop-blur-sm animate-pulse">
                           Featured
                         </Badge>
-                      </div>
+                      </motion.div>
                     )}
+                    
+                    {/* Overlay with gradient on hover */}
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                    />
                   </AspectRatio>
                 </div>
                 
@@ -177,50 +218,70 @@ const ProjectsSection = () => {
                 <CardContent className="flex-grow">
                   <div className="flex flex-wrap gap-2 mt-2">
                     {project.technologies.map((tech) => (
-                      <span 
+                      <motion.span 
                         key={tech} 
                         className="px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
                       >
                         {tech}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                   
                   {project.id === 3 && (
-                    <div className="mt-4 grid grid-cols-3 gap-2">
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors">
+                    <motion.div 
+                      className="mt-4 grid grid-cols-3 gap-2"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      <motion.div 
+                        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
+                        whileHover={{ x: 3 }}
+                      >
                         <Calendar className="h-4 w-4 text-primary" />
                         <span>Booking</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors">
+                      </motion.div>
+                      <motion.div 
+                        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
+                        whileHover={{ x: 3 }}
+                      >
                         <Clock className="h-4 w-4 text-primary" />
                         <span>Time Slots</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors">
+                      </motion.div>
+                      <motion.div 
+                        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
+                        whileHover={{ x: 3 }}
+                      >
                         <Users className="h-4 w-4 text-primary" />
                         <span>User Mgmt</span>
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                   )}
                 </CardContent>
                 
                 <CardFooter className="flex gap-2 flex-none">
                   {project.githubUrl && (
-                    <Button variant="outline" size="sm" asChild className="flex-1 group">
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                        <Github className="h-4 w-4 group-hover:text-primary transition-colors" />
-                        <span>Code</span>
-                      </a>
-                    </Button>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                      <Button variant="outline" size="sm" asChild className="w-full group">
+                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                          <Github className="h-4 w-4 group-hover:text-primary transition-colors" />
+                          <span>Code</span>
+                        </a>
+                      </Button>
+                    </motion.div>
                   )}
                   
                   {project.liveUrl && (
-                    <Button size="sm" asChild className="flex-1">
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                        <ExternalLink className="h-4 w-4" />
-                        <span>Live Demo</span>
-                      </a>
-                    </Button>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                      <Button size="sm" asChild className="w-full">
+                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                          <ExternalLink className="h-4 w-4" />
+                          <span>Live Demo</span>
+                        </a>
+                      </Button>
+                    </motion.div>
                   )}
                 </CardFooter>
               </Card>
@@ -236,13 +297,16 @@ const ProjectsSection = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <Button 
-              onClick={handleLoadMore} 
-              size="lg"
-              className="bg-primary/90 hover:bg-primary transition-colors"
-            >
-              Load More Projects
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                onClick={handleLoadMore} 
+                size="lg"
+                className="bg-primary/90 hover:bg-primary transition-colors relative overflow-hidden group"
+              >
+                <span className="relative z-10">Load More Projects</span>
+                <span className="absolute inset-0 w-0 bg-white/20 transition-all duration-300 group-hover:w-full"></span>
+              </Button>
+            </motion.div>
           </motion.div>
         )}
       </div>
